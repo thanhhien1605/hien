@@ -1,0 +1,761 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#09152f">
+<title>A Little Surprise For You 💙</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --navy: #09152f;
+  --blue: #3478f6;
+  --light: #b8dfff;
+  --purple: #a78bfa;
+  --pink: #ffb9dc;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100svh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: white;
+  text-align: center;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  background:
+    radial-gradient(ellipse at 15% 15%, #244d91 0%, transparent 40%),
+    radial-gradient(ellipse at 85% 80%, #493d8b 0%, transparent 40%),
+    linear-gradient(145deg, #071329, #102c5b, #171a46);
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#stars, #effects {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+#stars { z-index: 0; }
+#effects { z-index: 20; }
+
+.star {
+  position: absolute;
+  color: #d8eaff;
+  animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle {
+  from { opacity: .15; transform: scale(.6); }
+  to { opacity: 1; transform: scale(1.3); }
+}
+
+.page {
+  display: none;
+  position: relative;
+  z-index: 2;
+  width: min(92%, 500px);
+  min-height: 90vh;
+  min-height: 90svh;
+  margin: auto;
+  padding: 65px 20px 35px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: enter .65s ease;
+}
+
+.page.active { display: flex; }
+
+@keyframes enter {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tag {
+  color: #a8d9ff;
+  letter-spacing: 3px;
+  font-size: 11px;
+  font-weight: bold;
+  margin-bottom: 22px;
+}
+
+h1 {
+  font-size: clamp(32px, 9vw, 52px);
+  line-height: 1.2;
+  background: linear-gradient(90deg, #fff, #9ddcff, #c7a9ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 15px #78baff66);
+}
+
+h2 {
+  font-size: clamp(23px, 6vw, 32px);
+  color: #c6e4ff;
+  margin-bottom: 18px;
+}
+
+p {
+  color: #d9e9ff;
+  line-height: 1.9;
+  font-size: 15px;
+  margin: 12px 0;
+}
+
+.small {
+  font-size: 12px;
+  color: #a9c4eb;
+}
+
+.big-icon {
+  font-size: 85px;
+  margin: 22px;
+  filter: drop-shadow(0 0 20px #8acaff88);
+  animation: float 2s infinite ease-in-out;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+@keyframes float {
+  50% { transform: translateY(-12px); }
+}
+
+.panel {
+  width: 100%;
+  padding: 27px 20px;
+  border-radius: 25px;
+  background: linear-gradient(145deg, #ffffff20, #ffffff08);
+  border: 1px solid #ffffff35;
+  box-shadow: 0 15px 45px #020a2466;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+.main-btn {
+  border: 1px solid #ffffff55;
+  border-radius: 40px;
+  padding: 14px 25px;
+  margin: 9px 5px;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  background: linear-gradient(100deg, #3478f6, #8569eb);
+  box-shadow: 0 5px 25px #397bf766;
+  transition: transform .2s, box-shadow .2s;
+  min-height: 48px;
+}
+
+.main-btn:active {
+  transform: scale(.95);
+}
+
+.secondary {
+  background: #ffffff15;
+  box-shadow: none;
+}
+
+.progress {
+  position: fixed;
+  top: max(15px, env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%);
+  width: 75%;
+  height: 4px;
+  border-radius: 10px;
+  background: #ffffff25;
+  z-index: 30;
+}
+
+.progress span {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg,#57baff,#c5a2ff);
+  border-radius: 10px;
+  transition: .5s;
+}
+
+.choices {
+  display: grid;
+  gap: 12px;
+  width: 100%;
+  margin-top: 18px;
+}
+
+.choice {
+  width: 100%;
+  min-height: 52px;
+  padding: 13px;
+  color: white;
+  border: 1px solid #ffffff44;
+  border-radius: 16px;
+  background: #ffffff13;
+  transition: .3s;
+}
+
+.choice:active {
+  background: #557cd6;
+  transform: scale(.97);
+}
+
+.letter {
+  width: 100%;
+  padding: 25px 20px;
+  background: #e5edff;
+  color: #182c56;
+  border-radius: 5px 25px 5px 25px;
+  box-shadow: 0 0 35px #83baff55;
+}
+
+.letter p { color: #253e69; }
+.letter h2 { color: #3e5fa2; }
+
+.gift {
+  font-size: 95px;
+  cursor: pointer;
+  animation: shake 2s infinite;
+  filter: drop-shadow(0 0 20px #ffb8ec);
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@keyframes shake {
+  0%, 90%, 100% { transform: rotate(0); }
+  93% { transform: rotate(-10deg); }
+  96% { transform: rotate(10deg); }
+}
+
+.hidden { display: none !important; }
+
+.secret {
+  width: 100%;
+  padding: 20px;
+  background: #ffffff16;
+  border-radius: 20px;
+  border: 1px solid #ffffff33;
+  margin-top: 15px;
+  animation: enter .6s;
+}
+
+.heart {
+  display: inline-block;
+  font-size: 42px;
+  cursor: pointer;
+  margin: 8px;
+  transition: .3s;
+  animation: float 2s infinite;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.heart:active { transform: scale(1.4); }
+
+.final-title {
+  color: #ffcbec;
+  text-shadow: 0 0 20px #e78ccc;
+}
+
+.particle {
+  position: fixed;
+  z-index: 20;
+  pointer-events: none;
+  animation: rise 4s ease-out forwards;
+}
+
+@keyframes rise {
+  to {
+    transform: translateY(-110vh) rotate(600deg) scale(.4);
+    opacity: 0;
+  }
+}
+
+.footer {
+  margin-top: 30px;
+  font-size: 11px;
+  color: #94b6e3;
+}
+
+.music-control {
+  position: fixed;
+  z-index: 40;
+  right: 15px;
+  top: max(27px, env(safe-area-inset-top));
+  border-radius: 50%;
+  width: 43px;
+  height: 43px;
+  border: 1px solid #ffffff55;
+  background: #ffffff18;
+  color: white;
+  font-size: 19px;
+}
+
+@media(max-width: 480px) {
+  .page {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    padding:
+      max(65px, env(safe-area-inset-top))
+      20px
+      max(35px, env(safe-area-inset-bottom));
+  }
+
+  .panel { padding: 23px 16px; }
+  p { font-size: 14px; }
+  .big-icon { font-size: 72px; }
+  .main-btn { width: 100%; margin: 7px 0; }
+  .choices { gap: 10px; }
+}
+
+@media(prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="stars"></div>
+<div id="effects"></div>
+
+<div class="progress"><span id="bar"></span></div>
+
+<button class="music-control" id="musicButton"
+  onclick="toggleMusic()" aria-label="Bật hoặc tắt nhạc">♫</button>
+
+<!-- PAGE 1 -->
+<section class="page active" id="page1">
+  <div class="tag">A SPECIAL LITTLE SURPRISE</div>
+  <div class="big-icon">🌙</div>
+  <h1>Hey, you!</h1>
+  <p>Hôm nay có một điều nho nhỏ<br>muốn dành riêng cho bạn...</p>
+
+  <div class="panel">
+    <p>Không biết bạn có sẵn sàng khám phá không nhỉ? 👀</p>
+    <button class="main-btn" onclick="go(2)">Let's discover ✨</button>
+  </div>
+
+  <div class="footer">Made with a little bit of blue magic 💙</div>
+</section>
+
+<!-- PAGE 2 -->
+<section class="page" id="page2">
+  <div class="tag">STEP 01 — OPEN YOUR LETTER</div>
+  <h2>Một chiếc thư dành cho bạn</h2>
+
+  <div class="big-icon" onclick="openLetter()">💌</div>
+  <p>Có một lời chúc đang chờ được mở ra.<br>Chạm vào phong thư nhé!</p>
+
+  <button class="main-btn" onclick="openLetter()">MỞ PHONG THƯ 💙</button>
+
+  <div id="letterText" class="secret hidden">
+    <h2>Dear You!</h2>
+    <p>
+      Chào người nhận được chiếc thiệp đặc biệt này.
+      Đừng vội rời đi nhé, phía sau vẫn còn
+      vài điều thú vị đang chờ bạn.
+    </p>
+    <button class="main-btn" onclick="go(3)">Tiếp tục →</button>
+  </div>
+</section>
+
+<!-- PAGE 3 -->
+<section class="page" id="page3">
+  <div class="tag">STEP 02 — A LITTLE QUESTION</div>
+  <div class="big-icon">🤔</div>
+  <h2>Bạn có biết hôm nay là ngày gì không?</h2>
+  <p>Thử chọn đáp án xem nào!</p>
+
+  <div class="choices">
+    <button class="choice" onclick="answer(0)">A. Một ngày bình thường</button>
+    <button class="choice" onclick="answer(1)">B. Ngày Quốc tế Nam giới 19/11 💙</button>
+    <button class="choice" onclick="answer(2)">C. Ngày để nhận một điều bất ngờ 🎁</button>
+  </div>
+
+  <div id="answerText" class="secret hidden"></div>
+</section>
+
+<!-- PAGE 4 -->
+<section class="page" id="page4">
+  <div class="tag">STEP 03 — YOUR SPECIAL DAY</div>
+  <h1>HAPPY<br>MEN'S DAY</h1>
+  <div class="big-icon">💙</div>
+
+  <div class="letter">
+    <h2>Chúc mừng 19/11!</h2>
+    <p>
+      Chúc bạn luôn mạnh mẽ nhưng không cần phải
+      gồng mình trước thế giới to lớn này.
+      Hãy luôn tự tin theo đuổi những điều mình yêu thích.
+    </p>
+    <p>
+      Mong rằng mỗi ngày đều có thật nhiều niềm vui,
+      thành công luôn đồng hành và những điều tốt đẹp
+      sẽ bất ngờ tìm đến bạn.
+    </p>
+    <p>Hãy cứ là phiên bản tuyệt vời nhất của chính mình nhé!</p>
+    <p style="text-align:right">From someone who wishes you well ♡</p>
+  </div>
+
+  <button class="main-btn" onclick="go(5)">Hình như còn quà nữa? 🎁</button>
+</section>
+
+<!-- PAGE 5 -->
+<section class="page" id="page5">
+  <div class="tag">STEP 04 — YOUR MYSTERY GIFT</div>
+  <h2>Món quà nhỏ dành cho bạn</h2>
+  <p>Không phải món quà gì quá lớn lao,<br>nhưng hy vọng bạn sẽ thích nó.</p>
+
+  <div class="gift" onclick="openGift()">🎁</div>
+  <p>Chạm vào hộp quà 3 lần để mở nhé!</p>
+
+  <div id="giftText" class="secret hidden">
+    <div style="font-size:55px">🌟</div>
+    <h2>Surprise!</h2>
+    <p>
+      Món quà đặc biệt nhất hôm nay chính là...
+      một lời chúc thật chân thành dành cho bạn!
+    </p>
+    <p>
+      Chúc bạn luôn vui vẻ, bình an,
+      gặp nhiều may mắn và được yêu thương
+      theo cách mà bạn xứng đáng.
+    </p>
+    <button class="main-btn" onclick="go(6)">Còn điều gì nữa? 👀</button>
+  </div>
+</section>
+
+<!-- PAGE 6 -->
+<section class="page" id="page6">
+  <div class="tag">STEP 05 — FIND THE LITTLE HEART</div>
+  <h2>Một thử thách cuối cùng!</h2>
+  <p>Hãy tìm trái tim màu xanh đặc biệt nhé!</p>
+
+  <div id="heartGame">
+    <span class="heart" onclick="findHeart(this)">⭐</span>
+    <span class="heart" onclick="findHeart(this)">🌙</span>
+    <span class="heart" onclick="findHeart(this)">💫</span>
+    <span class="heart" onclick="findHeart(this)">🩵</span>
+    <span class="heart" onclick="findHeart(this)">✨</span>
+    <span class="heart" onclick="findHeart(this)">💙</span>
+    <span class="heart" onclick="findHeart(this)">🌟</span>
+    <span class="heart" onclick="findHeart(this)">☁️</span>
+    <span class="heart" onclick="findHeart(this)">💜</span>
+  </div>
+
+  <div id="heartResult" class="secret hidden">
+    <h2>YOU FOUND IT! 💙</h2>
+    <p>
+      Có những điều tuy nhỏ bé nhưng vẫn
+      khiến một ngày trở nên đặc biệt.
+    </p>
+    <button class="main-btn" onclick="go(7)">Mở lời nhắn cuối cùng →</button>
+  </div>
+</section>
+
+<!-- PAGE 7 -->
+<section class="page" id="page7">
+  <div class="tag">STEP 06 — A SECRET MESSAGE</div>
+  <div class="big-icon">💌</div>
+  <h2>Một lời nhắn nhỏ...</h2>
+
+  <p>
+    Có thể bạn không biết,<br>
+    nhưng đôi khi chỉ cần bạn xuất hiện<br>
+    cũng đủ khiến một ngày trở nên vui hơn một chút.
+  </p>
+
+  <button class="main-btn" onclick="revealSecret()">Có điều gì muốn nói sao? 💭</button>
+
+  <div id="lastSecret" class="secret hidden">
+    <h2 style="color:#ffcae9">Một chút đặc biệt ♡</h2>
+    <p>
+      Chúc bạn không chỉ có một ngày 19/11 thật vui,
+      mà còn có thật nhiều ngày sau đó đáng nhớ.
+    </p>
+    <p>
+      Và hy vọng rằng chiếc thiệp nhỏ này
+      đã khiến bạn mỉm cười một chút.
+    </p>
+    <button class="main-btn" onclick="go(8)">Điều cuối cùng đang chờ bạn ✨</button>
+  </div>
+</section>
+
+<!-- PAGE 8 -->
+<section class="page" id="page8">
+  <div class="tag">THE END — BUT NOT THE MEMORIES</div>
+  <div class="big-icon">🌌</div>
+  <h1 class="final-title">For You.</h1>
+  <h2>Happy Men's Day! 💙</h2>
+
+  <div class="panel">
+    <p>Chúc chàng trai của ngày hôm nay<br>luôn hạnh phúc, tự tin và thành công.</p>
+    <p>Cảm ơn vì đã dành thời gian khám phá chiếc thiệp nhỏ này.</p>
+    <p style="color:#ffc8e9">
+      Maybe you're a little more special than you think. ♡
+    </p>
+    <div style="font-size:35px">💙 ✨ 🌙</div>
+  </div>
+
+  <button class="main-btn" onclick="celebrate()">Gửi một cái ôm từ xa 🤗</button>
+  <button class="main-btn secondary" onclick="restart()">Xem lại từ đầu ↻</button>
+
+  <div class="footer">Made just for you · 19.11</div>
+</section>
+
+<script>
+"use strict";
+
+let giftCount = 0;
+let found = false;
+let secretOpened = false;
+let audioContext = null;
+let musicTimer = null;
+let musicOn = false;
+let currentNote = 0;
+
+const originalHearts = [
+  '⭐','🌙','💫','🩵','✨','💙','🌟','☁️','💜'
+];
+
+function go(number) {
+  const target = document.getElementById('page' + number);
+  if (!target) return;
+
+  document.querySelectorAll('.page').forEach(page => {
+    page.classList.remove('active');
+  });
+
+  target.classList.add('active');
+
+  document.getElementById('bar').style.width =
+    ((number - 1) / 7 * 100) + '%';
+
+  window.scrollTo(0, 0);
+
+  if(number === 8) celebrate();
+}
+
+function openLetter() {
+  document.getElementById('letterText').classList.remove('hidden');
+  burst('💙');
+}
+
+function answer(n) {
+  const box = document.getElementById('answerText');
+  box.classList.remove('hidden');
+
+  if(n === 0) {
+    box.innerHTML =
+      'Haha, không phải đâu! Đây là một ngày khá đặc biệt đấy. Thử lại nhé! 😆';
+  } else if(n === 1) {
+    box.innerHTML =
+      'Chính xác! 🎉 Ngày Quốc tế Nam giới 19/11. Và chiếc thiệp này dành riêng cho bạn!';
+  } else {
+    box.innerHTML =
+      'Đáp án cũng rất đáng yêu! Nhưng đúng là hôm nay bạn có một món quà nho nhỏ. 🎁';
+  }
+
+  if(n !== 0) {
+    const btn = document.createElement('button');
+    btn.className = 'main-btn';
+    btn.textContent = 'Nhận lời chúc 💙';
+    btn.onclick = () => go(4);
+    box.appendChild(document.createElement('br'));
+    box.appendChild(btn);
+    burst('✨');
+  }
+}
+
+function openGift() {
+  if(giftCount >= 3) return;
+
+  giftCount++;
+  const gift = document.querySelector('.gift');
+
+  if(giftCount < 3) {
+    gift.innerText = giftCount === 1 ? '🎀' : '🎁';
+    burst('✨');
+  } else {
+    gift.innerText = '🎉';
+    document.getElementById('giftText').classList.remove('hidden');
+    burst('💙');
+    burst('🎊');
+    burst('⭐');
+  }
+}
+
+function findHeart(el) {
+  if(found) return;
+
+  if(el.innerText === '💙') {
+    found = true;
+    el.innerText = '💗';
+    document.getElementById('heartResult').classList.remove('hidden');
+    burst('💙');
+    burst('💗');
+  } else {
+    el.innerText = '💭';
+    setTimeout(() => {
+      if(!found) el.innerText = originalHearts[
+        Array.from(el.parentNode.children).indexOf(el)
+      ];
+    },700);
+  }
+}
+
+function revealSecret() {
+  if(secretOpened) return;
+
+  secretOpened = true;
+  document.getElementById('lastSecret').classList.remove('hidden');
+  burst('💗');
+  burst('✨');
+}
+
+function burst(symbol) {
+  const container = document.getElementById('effects');
+
+  for(let i = 0; i < 12; i++) {
+    const el = document.createElement('div');
+    el.className = 'particle';
+    el.innerText = symbol;
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.bottom = '-40px';
+    el.style.fontSize = (18 + Math.random() * 25) + 'px';
+    el.style.animationDuration = (2 + Math.random() * 3) + 's';
+
+    container.appendChild(el);
+
+    setTimeout(() => el.remove(), 5500);
+  }
+}
+
+function celebrate() {
+  ['💙','✨','🎉','💗','⭐','🎊'].forEach((s,i) => {
+    setTimeout(() => burst(s), i * 180);
+  });
+}
+
+function restart() {
+  giftCount = 0;
+  found = false;
+  secretOpened = false;
+
+  document.querySelector('.gift').innerText = '🎁';
+
+  document.getElementById('giftText').classList.add('hidden');
+  document.getElementById('heartResult').classList.add('hidden');
+  document.getElementById('answerText').classList.add('hidden');
+  document.getElementById('letterText').classList.add('hidden');
+  document.getElementById('lastSecret').classList.add('hidden');
+
+  document.querySelectorAll('#heartGame .heart').forEach((h,i) => {
+    h.innerText = originalHearts[i];
+  });
+
+  go(1);
+}
+
+// Tạo nền sao
+for(let i = 0; i < 55; i++) {
+  const star = document.createElement('span');
+  star.className = 'star';
+  star.innerText = Math.random() > .5 ? '✦' : '·';
+  star.style.left = Math.random() * 100 + '%';
+  star.style.top = Math.random() * 100 + '%';
+  star.style.fontSize = (10 + Math.random() * 15) + 'px';
+  star.style.animationDelay = Math.random() * 3 + 's';
+
+  document.getElementById('stars').appendChild(star);
+}
+
+// Nhạc nền bằng Web Audio API, không cần file ngoài
+function toggleMusic() {
+  if(musicOn) {
+    musicOn = false;
+    clearInterval(musicTimer);
+    document.getElementById('musicButton').innerText = '♫';
+    return;
+  }
+
+  const AudioAPI = window.AudioContext || window.webkitAudioContext;
+
+  if(!AudioAPI) {
+    alert('Trình duyệt chưa hỗ trợ nhạc nền.');
+    return;
+  }
+
+  try {
+    if(!audioContext) audioContext = new AudioAPI();
+
+    audioContext.resume().then(() => {
+      musicOn = true;
+      document.getElementById('musicButton').innerText = '♫ ♪';
+
+      const notes = [261.63,329.63,392,329.63,293.66,349.23,440,349.23];
+
+      musicTimer = setInterval(() => {
+        if(!musicOn) return;
+
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.value = notes[currentNote % notes.length];
+
+        gain.gain.setValueAtTime(.0001,audioContext.currentTime);
+        gain.gain.exponentialRampToValueAtTime(.035,audioContext.currentTime + .08);
+        gain.gain.exponentialRampToValueAtTime(.0001,audioContext.currentTime + .8);
+
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+
+        osc.start();
+        osc.stop(audioContext.currentTime + .85);
+
+        currentNote++;
+      },850);
+    });
+  } catch(error) {
+    console.error('Audio error:',error);
+  }
+}
+
+// Xử lý lỗi để dễ kiểm tra
+window.addEventListener('error', function(e) {
+  console.error('Lỗi thiệp:', e.message);
+});
+
+</script>
+</body>
+</html>
